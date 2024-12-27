@@ -1,0 +1,43 @@
+<div class="task-form-container">
+  <h2>{{ isEditMode ? 'Edit Task' : 'Add Task' }}</h2>
+
+  <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+    <mat-card>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error *ngIf="taskForm.get('title')?.hasError('required')">
+          Title is required
+        </mat-error>
+        <mat-error *ngIf="taskForm.get('title')?.hasError('maxLength')">
+          Title cannot exceed 100 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+        <mat-error *ngIf="taskForm.get('description')?.hasError('maxLength')">
+          Description cannot exceed 500 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Due Date</mat-label>
+        <input matInput type="date" formControlName="dueDate" />
+        <mat-error *ngIf="taskForm.get('dueDate')?.hasError('required')">
+          Due Date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="isCompleted">Completed</mat-checkbox>
+
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">
+          Save
+        </button>
+        <button mat-button type="button" (click)="cancel()">Cancel</button>
+      </div>
+    </mat-card>
+  </form>
+</div>
